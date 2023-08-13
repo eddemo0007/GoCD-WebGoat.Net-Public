@@ -80,41 +80,42 @@ $USECREDS = "off"
 for ($i=0; $i -lt $args.Length; $i++) {
     $param = $args[$i].Split('=')[0]
     $value = $args[$i].Split('=')[1]
-    switch ($param) {
-        "-h", "--help" {
-            Usage
-            exit
-        }
-        "--debug", "-d" {
-            $Debug = "on"
-        }
-        "--usecreds", "-uc" {
-            $USECREDS = "on"
-        }
-        "--app" {
-            $APP = $value
-        }
-        "--file" {
-            $FILE = $value
-        }
-        "--filepath" {
-            $FILEPATH = $value
-        }
-        "--crit" {
-            $BUSINESSCRITICALITY = $value
-        }
-        "--vid" {
-            $env:VERACODE_ID = $value
-        }
-        "--vkey" {
-            $env:VERACODE_KEY = $value
-        }
-        default {
-            Write-Host "ERROR: unknown parameter `"$param`""
-            Usage
-            exit 1
-        }
+switch -Regex ($param) {
+    "-h|--help" {
+        Usage
+        exit
     }
+    "--debug|-d" {
+        $Debug = "on"
+    }
+    "--usecreds|-uc" {
+        $USECREDS = "on"
+    }
+    "--app" {
+        $APP = $value
+    }
+    "--file" {
+        $FILE = $value
+    }
+    "--filepath" {
+        $FILEPATH = $value
+    }
+    "--crit" {
+        $BUSINESSCRITICALITY = $value
+    }
+    "--vid" {
+        $env:VERACODE_ID = $value
+    }
+    "--vkey" {
+        $env:VERACODE_KEY = $value
+    }
+    default {
+        Write-Host "ERROR: unknown parameter `"$param`""
+        Usage
+        exit 1
+    }
+}
+
 }
 
 if ($Debug) {
