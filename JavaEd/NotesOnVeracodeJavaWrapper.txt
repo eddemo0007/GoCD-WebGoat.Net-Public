@@ -1,0 +1,56 @@
+This Folder will hold the Veracode vosp-api-wrapper-java wrapper:
+
+Using the `vosp-api-wrapper-java` in a GoCD pipeline running on Windows involves several steps. This wrapper seems to be related to the Verizon Open Source Portal, but I will provide a general guide based on common practices for integrating Java libraries in GoCD pipelines. Please adapt the steps according to the specifics of the `vosp-api-wrapper-java` library and your project's requirements.
+
+Assuming you have a basic understanding of GoCD and your project setup, here's a step-by-step guide:
+
+1. **Setup the Pipeline Environment:**
+
+   Make sure you have a GoCD pipeline configured on your Windows machine. This might involve setting up a pipeline that checks out your project's source code from a version control system (e.g., Git).
+
+2. **Install Java:**
+
+   Ensure that Java is installed on your Windows machine where GoCD is running. You'll need a Java runtime to execute Java-based tasks in your pipeline.
+
+3. **Download and Set Up the Wrapper:**
+
+   - Obtain the `vosp-api-wrapper-java` JAR file and any required dependencies.
+
+   - Create a directory in your project where you can store the JAR file and other required files.
+
+4. **Configure GoCD Pipeline:**
+
+   Open your GoCD pipeline configuration and define the necessary stages and tasks.
+
+   - **Fetch Materials:**
+
+     Use a task to fetch your project's source code from your version control system.
+
+   - **Setup Environment:**
+
+     Use a task to set up the environment for your pipeline. This might include setting environment variables and paths needed for the Java runtime and your project.
+
+   - **Run Your Java Task:**
+
+     Use a task to run your Java application using the `vosp-api-wrapper-java`. Here's an example script that could be part of your GoCD pipeline configuration:
+
+     ```bash
+     #!/bin/bash
+     set -e
+     
+     # Set Java related paths and environment variables
+     export JAVA_HOME=/path/to/your/java/home
+     export PATH=$JAVA_HOME/bin:$PATH
+     export VOSP_WRAPPER_JAR=/path/to/your/project/vosp-api-wrapper-java.jar
+     
+     # Run the Java application using the wrapper
+     java -jar $VOSP_WRAPPER_JAR
+     ```
+
+     Replace `/path/to/your/java/home` with the actual path to your Java installation, and `/path/to/your/project/vosp-api-wrapper-java.jar` with the actual path to the wrapper JAR.
+
+5. **Commit and Trigger the Pipeline:**
+
+   Once you have configured the pipeline properly, commit your changes to the pipeline configuration file. This could be a YAML or JSON file, depending on your GoCD setup. After committing, trigger the pipeline execution.
+
+Remember that this is a general guideline and the exact steps might vary based on your project's requirements and the specifics of the `vosp-api-wrapper-java` library. Be sure to refer to any documentation provided with the wrapper for specific usage instructions. If the wrapper has any specific configuration or integration requirements, make sure to follow those as well.
