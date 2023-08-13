@@ -1,0 +1,29 @@
+format_version: 3
+pipelines:
+  build_and_test:
+    group: sample
+    label_template: '${COUNT}'
+    lock_behavior: unlockWhenFinished
+    display_order: 1
+    materials:
+      git:
+        git: https://github.com/gocd-demo/node-bulletin-board.git
+        shallow_clone: true
+        auto_update: true
+        branch: master
+    stages:
+      - build:
+          fetch_materials: true
+          jobs:
+            - build_app:
+                tasks:
+                  - exec:
+                      command: /bin/bash
+                      arguments:
+                        - -c
+                        - 'npm install && npm run build'
+                  - exec:
+                      command: /bin/bash
+                      arguments:
+                        - -c
+                        - 'ls -l'
