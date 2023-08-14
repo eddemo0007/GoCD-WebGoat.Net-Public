@@ -28,8 +28,8 @@ SET VERACODE_JAR_PATH=.\VeracodeJavaAPI.jar
 SET API_ID=8e3c8af9f16be054867c9344ce74090e
 SET API_KEY=3e95620ba25005d71b4d983a178454d9efe0836e6c00e60def419649472f3023878512af1d2aa24ec3950afc92aac916013add32409b9e4d60f623eb978546ff
 SET APP_NAME=GoCDVerademo-dotnet0001
-SET SCAN_NAME=Scan012
-SET VERSION=Version012
+SET SCAN_NAME=Scan014
+SET VERSION=Version014
 SET SCAN_PDF_REPORT=scan_report.pdf
 SET FILEPATH=C:\local-repos\verademo-dotnet\app\bin.zip
 
@@ -40,14 +40,8 @@ ECHO End of: Veracode Upload and Scan
 
 ECHO Start of: Lets get the Analysis ID
 
-# Using grep and awk to extract the analysis ID
-# Path to the console.log file within the artifacts directory
 log_file_path="cruise-output/console.log"
-
-# Extracting the analysis ID from the log file
 analysis_id=$(grep -oE 'analysis id of the new analysis is "([0-9]+)"' "$log_file_path" | awk -F '"' '{print $2}')
-
-# Printing the extracted analysis ID
 echo "Extracted Analysis ID: $analysis_id"
 
 Echo End of: Lets get the Analysis ID
