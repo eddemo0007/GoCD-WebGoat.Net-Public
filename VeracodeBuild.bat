@@ -28,8 +28,8 @@ SET VERACODE_JAR_PATH=.\VeracodeJavaAPI.jar
 SET API_ID=8e3c8af9f16be054867c9344ce74090e
 SET API_KEY=3e95620ba25005d71b4d983a178454d9efe0836e6c00e60def419649472f3023878512af1d2aa24ec3950afc92aac916013add32409b9e4d60f623eb978546ff
 SET APP_NAME=GoCDVerademo-dotnet0001
-SET SCAN_NAME=Scan009
-SET VERSION=Version009
+SET SCAN_NAME=Scan010
+SET VERSION=Version010
 SET SCAN_PDF_REPORT=scan_report.pdf
 SET FILEPATH=C:\local-repos\verademo-dotnet\app\bin.zip
 
@@ -39,15 +39,18 @@ java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action upload
 ECHO End of: Veracode Upload and Scan
 
 ECHO Start of: Check Scan Status 001
+
 :CHECK_SCAN_STATUS
-FOR /f "tokens=*" %%i in ('java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action getappbuilds -appname "%APP_NAME%" ^| findstr "status="') do (
+FOR /f "tokens=*" %%i in ('java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action getappbuilds -appname "%APP_NAME%" ^| findstr /C:"status="') do (
     SET "SCAN_STATUS=%%i"
 )
+SET "SCAN_STATUS=%SCAN_STATUS:status=%"
+
 ECHO End of: Check Scan Status 001
 
 ECHO Start of: Check Scan Status 002
 REM Check the scan status
-IF "%SCAN_STATUS%" == "ResultsReady" (
+IF "%SCAN_STATUS%" == " ResultsReady " (
     REM Download PDF report
     java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action summaryreport -appname "%APP_NAME%" -buildname "%SCAN_NAME%" -outputfile "%SCAN_PDF_REPORT%"
 ) ELSE (
@@ -57,3 +60,4 @@ IF "%SCAN_STATUS%" == "ResultsReady" (
 ECHO End of: Check Scan Status 002
 
 EXIT /B
+
