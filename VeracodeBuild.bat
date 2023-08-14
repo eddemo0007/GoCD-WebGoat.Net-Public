@@ -38,11 +38,14 @@ REM Upload to Veracode
 java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action uploadandscan -appname "%APP_NAME%" -createprofile false -filepath %FILEPATH% -version %VERSION%
 ECHO End of: Veracode Upload and Scan
 
+ECHO Start of: Check Scan Status 001
 :CHECK_SCAN_STATUS
 FOR /f "tokens=*" %%i in ('java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action getappbuilds -appname "%APP_NAME%" ^| findstr "status="') do (
     SET "SCAN_STATUS=%%i"
 )
+ECHO End of: Check Scan Status 001
 
+ECHO Start of: Check Scan Status 002
 REM Check the scan status
 IF "%SCAN_STATUS%" EQU "ResultsReady" (
     REM Download PDF report
@@ -51,5 +54,6 @@ IF "%SCAN_STATUS%" EQU "ResultsReady" (
     TIMEOUT /T 10
     GOTO CHECK_SCAN_STATUS
 )
+ECHO End of: Check Scan Status 002
 
 EXIT /B
