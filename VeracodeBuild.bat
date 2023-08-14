@@ -28,8 +28,8 @@ SET VERACODE_JAR_PATH=.\VeracodeJavaAPI.jar
 SET API_ID=8e3c8af9f16be054867c9344ce74090e
 SET API_KEY=3e95620ba25005d71b4d983a178454d9efe0836e6c00e60def419649472f3023878512af1d2aa24ec3950afc92aac916013add32409b9e4d60f623eb978546ff
 SET APP_NAME=GoCDVerademo-dotnet0001
-SET SCAN_NAME=Scan010
-SET VERSION=Version010
+SET SCAN_NAME=Scan011
+SET VERSION=Version011
 SET SCAN_PDF_REPORT=scan_report.pdf
 SET FILEPATH=C:\local-repos\verademo-dotnet\app\bin.zip
 
@@ -37,6 +37,10 @@ ECHO Start of: Veracode Upload and Scan
 REM Upload to Veracode
 java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action uploadandscan -appname "%APP_NAME%" -createprofile false -filepath %FILEPATH% -version %VERSION%
 ECHO End of: Veracode Upload and Scan
+
+ECHO Start of Eds Check
+java -jar "%VERACODE_JAR_PATH%" -vid "%API_ID%" -vkey "%API_KEY%" -action getappbuilds -appname "%APP_NAME%" 
+ECHO End of Eds Check
 
 ECHO Start of: Check Scan Status 001
 
